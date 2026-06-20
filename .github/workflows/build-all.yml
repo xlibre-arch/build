@@ -176,8 +176,6 @@ jobs:
 
   xlibre-xserver:
     uses: ./.github/workflows/build-package.yml
-    needs:
-      - xlibre-xserver
     with:
       repository: ${{ github.repository_owner }}/xlibre-xserver
       force-build: ${{ inputs.force-build }}
