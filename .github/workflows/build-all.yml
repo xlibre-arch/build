@@ -75,6 +75,16 @@ jobs:
       force-build: ${{ inputs.force-build }}
     secrets: inherit
 
+  xlibre-meta:
+    uses: ./.github/workflows/build-package.yml
+    needs:
+      - xlibre-input-libinput
+      - xlibre-xserver
+    with:
+      repository: ${{ github.repository_owner }}/xlibre-meta
+      force-build: ${{ inputs.force-build }}
+    secrets: inherit
+
   xlibre-video-amdgpu:
     uses: ./.github/workflows/build-package.yml
     needs:
@@ -190,6 +200,7 @@ jobs:
       - xlibre-input-vmmouse
       - xlibre-input-void
       - xlibre-input-wacom
+      - xlibre-meta
       - xlibre-video-amdgpu
       - xlibre-video-ati
       - xlibre-video-dummy
