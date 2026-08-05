@@ -60,6 +60,13 @@ jobs:
         with:
           reponame: ${{ env.REPO_NAME }}
 
+        # Officially deprecate and remove at the end of 2026
+      - name: Create legacy 'xlibre' repo # for the old repo db name
+        if: ${{ env.REPO_NAME == 'xlibre-stable' }}
+        uses: callmetango/archlinux-make-repo-action@HEAD
+        with:
+          reponame: xlibre
+
       - name: Release new release
         env:
           APP_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -67,6 +74,6 @@ jobs:
           "$SCRIPTS_DIR"/draft-new-release.sh "$TARGET_REPOSITORY" \
               "$NEXT_RELEASE_TAG" 'true'
           gh release upload --repo "$TARGET_REPOSITORY" "$NEXT_RELEASE_TAG" \
-              *.pkg.* "$REPO_NAME".files* "$REPO_NAME".db*
+              *.db* *.files* *.pkg.*
           "$SCRIPTS_DIR"/release-new-release.sh "$TARGET_REPOSITORY" \
               "$CURRENT_RELEASE_TAG" "$NEXT_RELEASE_TAG"
